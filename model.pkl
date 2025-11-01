@@ -1,0 +1,25 @@
+import pandas as pd
+import pickle
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+
+# Load your dataset
+data = pd.read_csv("your_dataset.csv")   # 👈 replace with your file name
+target_column = "target"                # 👈 replace with your target column name
+
+# Split features and target
+X = data.drop(columns=[target_column])
+y = data[target_column]
+
+# Train-test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train model (you can change to LogisticRegression or KNN if you prefer)
+model = SVC()
+model.fit(X_train, y_train)
+
+# Save trained model to pickle file
+with open("model.pkl", "wb") as f:
+    pickle.dump(model, f)
+
+print("✅ Model trained and saved successfully as model.pkl")
